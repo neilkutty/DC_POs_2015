@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(dplyr)\ndc_po_data <- read.csv(\"Purchase_order_FY15.csv\",header=TRUE)\ncolnames(dc_po_data) <- c('Agency','Commodity','Supplier','Date','PO','Amount')\n\nAgencies <- distinct(select(dc_po_data,Agency))\n\n#for shiny UI selectInput choices arg.\nrow.names(Agencies) <- Agencies$Agency\n\nshinyUI(fluidPage(\n  titlePanel(\"DC Purchase Orders 10/2014 - 3/2015\"),\n  helpText(\"Data Explorer for Washington D.C. public purchase orders\"),\n  p(\n    class=\"text-muted\",\n    paste(\"data source:http://opendata.dc.gov/datasets\"),\n    br(),\n    paste(\"author:twitter.com/neilkutty\")\n  ),\n  \n\n  \n  fluidRow(\n          column(width=10,offset=.25,\n      \n           helpText(\"\"),\n           \n           selectInput(\"datasetchoice\", \"Choose DC Agency to view PO data\",\n                       choices =  as.character(row.names(Agencies)),\n                       selected = Agencies$Agency[10])\n           \n           #selectInput(\"\")\n          )\n    \n  ),\n  h4(textOutput(\"text1\")),\n  plotOutput(\"plot\", height = \"600px\"),\n  dataTableOutput(\"table\")\n\n  \n))",
+    "created" : 1458061126422.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "37280325",
+    "id" : "D9279900",
+    "lastKnownWriteTime" : 1458069581,
+    "last_content_update" : 1458069581117,
+    "path" : "~/Documents/project/DC_POs_2015/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

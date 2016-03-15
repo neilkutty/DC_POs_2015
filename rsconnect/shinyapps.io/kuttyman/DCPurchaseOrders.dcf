@@ -1,0 +1,10 @@
+name: DCPurchaseOrders
+account: kuttyman
+server: shinyapps.io
+appId: 88987
+bundleId: 396033
+url: https://kuttyman.shinyapps.io/DCPurchaseOrders/
+when: 1458069721.61843
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: DC_POs_xml2.R|output.gif|PO_animation2.gif

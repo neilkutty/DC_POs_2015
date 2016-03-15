@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\nlibrary(shinyBS)\nlibrary(ggplot2)\nlibrary(scales)\nlibrary(zoo)\nlibrary(lubridate)\nlibrary(RColorBrewer)\ndc_po_data <- read.csv(\"Purchase_order_FY15.csv\",header=TRUE)\ncolnames(dc_po_data) <- c('Agency','Commodity','Supplier','Date','PO','Amount')\n###>>> Basic Transformations\ndc_po_data$Amount <- as.numeric(dc_po_data$Amount)\ndc_po_data$Date <- as.Date(as.character(dc_po_data$Date), \"%d-%b-%y\")\ndc_po_data$MonthYear <- paste(year(dc_po_data$Date),'-',month(dc_po_data$Date),sep='')\nfil_set <- dc_po_data\n\nshinyServer(function(input, output) {\n  output$plot <- renderPlot({\n     fil_set <- filter(fil_set,Agency==input$datasetchoice)\n    \n    \n    ggplot(fil_set,aes(x=Date,y=Amount,size=Amount,color=Amount))+\n      geom_point()+\n      geom_smooth()+\n      scale_colour_gradient(low = \"blue\", high = \"orange\") +\n      theme(plot.title = element_text(lineheight=.8, face=\"bold\"),legend.position=c(.78,.25))+\n      scale_x_date(date_breaks='1 month')+\n      #coord_trans(y=\"log10\")+\n      scale_y_continuous(labels=dollar)+\n      theme(axis.text.x = element_text(angle=90,hjust=1))\n  })\n  \n  output$table <- renderDataTable({\n    filter(fil_set,Agency==input$datasetchoice)\n  })\n  output$text1 <- renderText({ \n    paste(\"Selected Agency:\", input$datasetchoice)\n  })\n})",
+    "created" : 1457392917996.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "741127248",
+    "id" : "2DB45BDC",
+    "lastKnownWriteTime" : 1458066992,
+    "last_content_update" : 1458066992943,
+    "path" : "~/Documents/project/DC_POs_2015/server.r",
+    "project_path" : "server.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
